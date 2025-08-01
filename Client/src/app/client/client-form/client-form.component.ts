@@ -125,7 +125,7 @@ export class ClientFormComponent implements OnInit {
       middleName: '',
       email: '',
       allowNewSletter: false
-    });;
+    });
     this.phones = [this.getEmptyPhone()]
     this.tags.forEach(x => x.selected = false)
   }

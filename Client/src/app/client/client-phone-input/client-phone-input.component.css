@@ -1,0 +1,14 @@
+.delete-phone-btn {
+  width: 38px;
+}
+
+.deletable {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .deletable {
+    opacity: 0;
+    display: block;
+  }
+}

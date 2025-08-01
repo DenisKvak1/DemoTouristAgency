@@ -1,0 +1,6 @@
+<div class="tag-grid">
+  <div *ngFor="let tag of tags; trackBy: trackById">
+    <input class="form-check-input" [id]="tag.id" [(ngModel)]="tag.selected" type="checkbox">
+    <label class="form-check-label ms-2" [for]="tag.id">{{ tag.name }}</label>
+  </div>
+</div>

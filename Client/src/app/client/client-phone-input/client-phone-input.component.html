@@ -1,0 +1,19 @@
+<div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
+  <div>
+    <input class="form-control" placeholder="Телефон" [(ngModel)]="phone.number"/>
+    <span class="text-danger"></span>
+  </div>
+  <div *ngFor="let socialMedia of phone.socialMedias; trackBy: trackById">
+    <input class="form-check-input" [id]="socialMedia.id" [(ngModel)]="socialMedia.selected" type="checkbox">
+    <label class="form-check-label ms-2" [for]="socialMedia.id">{{ socialMedia.name }}</label>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-danger delete-phone-btn"
+    (click)="delete.emit()"
+    [disabled]="!isDeletable"
+    [class.deletable]="!isDeletable"
+  >-
+  </button>
+</div>

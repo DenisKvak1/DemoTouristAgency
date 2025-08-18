@@ -1,6 +1,17 @@
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
   <div>
-    <input class="form-control" placeholder="Телефон" [(ngModel)]="phone.number"/>
+    <ngx-intl-tel-input
+      [(ngModel)]="phone.number"
+      [preferredCountries]="[CountryISO.Ukraine, CountryISO.Kazakhstan, CountryISO.Germany]"
+      [enableAutoCountrySelect]="true"
+      [enablePlaceholder]="true"
+      [searchCountryFlag]="true"
+      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+      [selectFirstCountry]="false"
+      [selectedCountryISO]="CountryISO.Ukraine"
+      [phoneValidation]="true"
+    >
+    </ngx-intl-tel-input>
     <span class="text-danger"></span>
   </div>
   <div *ngFor="let socialMedia of phone.socialMedias; trackBy: trackById">

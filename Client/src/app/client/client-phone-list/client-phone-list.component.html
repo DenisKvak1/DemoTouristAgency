@@ -4,7 +4,7 @@
     >
       <app-client-phone-input
         class="mt-2"
-        [isDeletable]="i !== 0"
+        [isDeletable]="phones.length !== 1"
         [phone]="phone"
         (delete)="onPhoneDelete(i)"
       ></app-client-phone-input>

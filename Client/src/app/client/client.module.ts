@@ -7,6 +7,7 @@ import { ClientPhoneInputComponent } from './client-phone-input/client-phone-inp
 import { ClientPhoneListComponent } from './client-phone-list/client-phone-list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ClientAddComponent } from './client-add/client-add.component';
+import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 
 @NgModule({
   declarations: [
@@ -16,12 +17,13 @@ import { ClientAddComponent } from './client-add/client-add.component';
     ClientPhoneListComponent,
     ClientAddComponent
   ],
-  imports: [
-    CommonModule,
-    ClientRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-  ]
+    imports: [
+        CommonModule,
+        ClientRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxIntlTelInputModule,
+    ]
 })
 export class ClientModule {
 }

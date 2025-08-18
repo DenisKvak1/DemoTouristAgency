@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ClientTagForm} from '../client-tags-picker/ClientTagForm';
 import {ClientPhoneForm, SocialMediaForm} from './ClientPhoneForm';
+import {CountryISO, SearchCountryField} from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-client-phone-input',
@@ -19,4 +20,6 @@ export class ClientPhoneInputComponent {
     return tag.id;
   }
 
+  protected readonly CountryISO = CountryISO;
+  protected readonly SearchCountryField = SearchCountryField;
 }

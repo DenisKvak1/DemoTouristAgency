@@ -5,7 +5,17 @@
 .deletable {
   display: none;
 }
+::ng-deep ngx-intl-tel-input .iti__country-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
 
+::ng-deep ngx-intl-tel-input .search-container input {
+  font-size: 14px;
+  border-color: #c7cace;
+  border-radius: 0;
+  padding: 5px 10px;
+}
 @media (min-width: 576px) {
   .deletable {
     opacity: 0;

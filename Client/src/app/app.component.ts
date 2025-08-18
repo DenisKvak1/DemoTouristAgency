@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import {CountryISO, SearchCountryField} from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
 
+  protected readonly CountryISO = CountryISO;
+  protected readonly SearchCountryField = SearchCountryField;
 }

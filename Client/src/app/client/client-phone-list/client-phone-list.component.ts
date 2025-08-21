@@ -1,79 +1,32 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ClientPhoneForm, SocialMediaForm} from '../client-phone-input/ClientPhoneForm';
 import {SocialMedia} from '../../../models/SocialMedia';
 import {
   AbstractControl,
   ControlValueAccessor,
   FormArray,
-  FormControl, NG_VALIDATORS,
+  FormControl, FormGroup, NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
+  Validator, Validators
 } from '@angular/forms';
 
 @Component({
   selector: 'app-client-phone-list',
   standalone: false,
   templateUrl: './client-phone-list.component.html',
-  styleUrl: './client-phone-list.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ClientPhoneListComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => ClientPhoneListComponent),
-      multi: true
-    }
-  ]
+  styleUrl: './client-phone-list.component.css'
 })
-export class ClientPhoneListComponent implements ControlValueAccessor, Validator {
-  phones = new FormArray<FormControl<ClientPhoneForm>>([]);
+export class ClientPhoneListComponent implements OnInit {
+  @Input() phones!: FormArray<FormGroup<ClientPhoneForm>>;
   @Input() socialMedias!: SocialMedia[]
 
-  private validateEmit!: () => void;
-  private changeEmit!: (phones: ClientPhoneForm[]) => void;
-  private touchEmit!: () => void;
-
-  constructor() {
-    this.phones.valueChanges.subscribe(val => {
-      this.changeEmit(val);
-      this.validateEmit()
-    });
-  }
-
-  public writeValue(phones: ClientPhoneForm[]): void {
-    if (!phones) {
-      this.phones.clear();
-      return;
-    }
-    if (phones.length === 0 && this.changeEmit !== undefined) {
-      this.addPhone()
-    }
-    if (phones.length === this.phones.length) {
-      return this.phones.setValue(phones, {emitEvent: false});
-    }
-
-    this.phones.clear({emitEvent: false});
-    phones.forEach(p => {
-      this.phones.push(new FormControl<ClientPhoneForm>(p, {
-        nonNullable: true,
-      }));
-    });
-  }
-
-  public markAsTouched() {
-    this.phones.markAllAsTouched()
-  }
-
   public addPhone() {
-    if (this.phones.length !== 0 && this.phones.value.some(x => x.number === '')) {
+    if (this.phones.length !== 0 && this.phones.controls.some(x => x.controls.number.invalid)) {
       return this.phones.markAllAsTouched()
     }
     this.phones.push(
-      new FormControl<ClientPhoneForm>(this.getEmptyPhone(), {nonNullable: true})
+      new FormGroup<ClientPhoneForm>(this.getEmptyPhone())
     );
   }
 
@@ -89,28 +42,11 @@ export class ClientPhoneListComponent implements ControlValueAccessor, Validator
     )
   }
 
-  public registerOnChange(fn: (phones: ClientPhoneForm[]) => void): void {
-    this.changeEmit = fn;
+  public ngOnInit(): void {
     if (this.phones.length === 0) this.addPhone()
   }
 
-  public registerOnTouched(fn: () => void): void {
-    this.touchEmit = fn;
-  }
-
-  public trackById(i: number, tag: FormControl<ClientPhoneForm>) {
+  public trackById(i: number, tag: FormGroup<ClientPhoneForm>) {
     return tag.value.id;
-  }
-
-  public validate(control: AbstractControl): ValidationErrors | null {
-    const errors: ValidationErrors = {}
-    this.phones.controls.forEach((control, index) => {
-      if (control.errors) errors[`phone_${index}`] = true;
-    })
-    return errors
-  }
-
-  public registerOnValidatorChange(fn: () => void): void {
-    this.validateEmit = fn;
   }
 }

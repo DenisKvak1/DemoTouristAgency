@@ -8,6 +8,7 @@ import { ClientPhoneListComponent } from './client-phone-list/client-phone-list.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ClientAddComponent } from './client-add/client-add.component';
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
+import { ClientPasportComponent } from './client-pasport/client-pasport.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
     ClientTagsPickerComponent,
     ClientPhoneInputComponent,
     ClientPhoneListComponent,
-    ClientAddComponent
+    ClientAddComponent,
+    ClientPasportComponent
   ],
     imports: [
         CommonModule,

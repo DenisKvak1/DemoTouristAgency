@@ -18,18 +18,16 @@ import {ClientPhoneListComponent} from '../client-phone-list/client-phone-list.c
   styleUrl: './client-form.component.css'
 })
 export class ClientFormComponent implements OnInit {
-  @ViewChild(ClientPhoneListComponent, {static: false}) phoneListComponent!: ClientPhoneListComponent;
-
   @Output() submitForm = new EventEmitter<ClientForm>();
   @Input() initialValue?: Client;
   form = new FormGroup({
-    firstName: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required,),
     lastName: new FormControl('', Validators.required),
     middleName: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     allowNewSletter: new FormControl(false, Validators.required),
-    phones: new FormControl<ClientPhoneForm[]>([], Validators.required),
-    tags: new FormControl<ClientTagForm[]>([], Validators.required)
+    phones: new FormArray<FormGroup<ClientPhoneForm>>([], Validators.required),
+    tags: new FormArray<FormGroup<ClientTagForm>>([], Validators.required)
   });
 
   constructor(
@@ -57,28 +55,18 @@ export class ClientFormComponent implements OnInit {
       email: this.initialValue.email,
       allowNewSletter: this.initialValue.allowNewSletter,
       phones: this.initialValue.phones.map(phone => {
-        return new ClientPhoneForm(phone.id, phone.number, phone.socialMedias.map(socialMedia => new SocialMediaForm(socialMedia.id, socialMedia.id)));
+        return ClientPhoneForm.toPlain(new ClientPhoneForm(
+          phone.id,
+          phone.number,
+          phone.socialMedias.map(socialMedia => new SocialMediaForm(socialMedia.id, socialMedia.id))));
       })
     })
   }
 
 
   private onTagLoad(tags: ClientTag[]) {
-    if (!this.initialValue) {
-      this.form.controls.tags.patchValue(tags.map(x => new ClientTagForm(x.id, x.name)))
-    } else {
-      this.form.controls.tags.patchValue(
-        this.initialValue.tags
-          .filter(x => !tags.some(tag => x.id === tag.id))
-          .map(tag => {
-            const tags = this.form.controls.tags.value as ClientTagForm[]
-            const foundTag = tags.find(x => x.id === tag.id)
-            return {
-              ...foundTag,
-              selected: true
-            } as ClientTagForm
-          }));
-    }
+    this.form.controls.tags.clear()
+    tags.forEach(x => this.form.controls.tags.push(new FormGroup<ClientTagForm>(new ClientTagForm(x.id, x.name))))
   }
 
   private onSocialMediaLoad(socialMedias: SocialMedia[]) {
@@ -89,8 +77,7 @@ export class ClientFormComponent implements OnInit {
   public onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.phoneListComponent.markAsTouched()
-      console.log('invalid')
+      this.form.markAsTouched()
       return;
     }
     const formResult = this.form.value;
@@ -100,14 +87,14 @@ export class ClientFormComponent implements OnInit {
       formResult.middleName as string,
       formResult.email as string,
       formResult.allowNewSletter as boolean,
-      (formResult.phones as ClientPhoneForm[]).map((phone) => {
+      (formResult.phones ?? []).map((phone) => {
         return {
-          id: phone.id,
-          number: phone.number,
-          socialMedias: phone.socialMedias.filter(x => x.selected).map(x => x.id)
+          id: phone.id as string,
+          number: phone.number as string,
+          socialMedias: (phone.socialMedias ?? []).filter(x => x.selected).map(x => x.id as string)
         }
       }),
-      (formResult.tags as ClientTagForm[]).filter(x => x.selected).map(x => x.id)
+      (formResult.tags ?? []).filter(x => x.selected).map(x => x.id as string)
     ))
     if (!this.initialValue) this.resetForm()
   }
@@ -120,7 +107,9 @@ export class ClientFormComponent implements OnInit {
       email: '',
       allowNewSletter: false,
       phones: [],
-      tags: (this.form.controls.tags.value as ClientTagForm[]).map(x => new ClientTagForm(x.id, x.name))
+      tags: (this.form.controls.tags.value ?? []).map(x =>
+        ClientTagForm.toPlain(new ClientTagForm(x.id as string, x.name as string))
+      )
     });
   }
 }

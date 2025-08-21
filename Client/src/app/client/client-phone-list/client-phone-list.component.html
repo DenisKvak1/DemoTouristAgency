@@ -4,15 +4,10 @@
     >
       <app-client-phone-input
         class="mt-2"
-        [formControl]="phoneControl"
+        [phoneControl]="phoneControl"
         [isDeletable]="phones.length !== 1"
         (delete)="deletePhone(i)"
       ></app-client-phone-input>
-      <div *ngIf="phoneControl.invalid && !phoneControl.untouched && phoneControl.errors as errors"
-           class="flex flex-column">
-        <div class="text-danger" *ngIf="errors['required']">Номер телефона обязателен</div>
-        <div class="text-danger" *ngIf="errors['validatePhoneNumber']">Неверный номер телефона</div>
-      </div>
     </div>
   </div>
   <button type="button" class="btn btn-primary mt-2" (click)="this.addPhone()">+</button>

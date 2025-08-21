@@ -23,8 +23,13 @@
       </div>
 
     </div>
-    <app-client-tags-picker class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0" [tags]="tags"/>
+    <app-client-tags-picker class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0" [formControl]="form.controls.tags"/>
   </div>
-  <app-client-phone-list class="row mt-4" [phones]="phones" (addPhone)="addPhone()"></app-client-phone-list>
+  <app-client-phone-list
+    class="row mt-4"
+    *ngIf="isSocialMediasLoad"
+    [formControl]="form.controls.phones"
+    [socialMedias]="socialMedias"
+  ></app-client-phone-list>
   <button type="submit" class="btn btn-primary mt-3">Подвтердить</button>
 </form>

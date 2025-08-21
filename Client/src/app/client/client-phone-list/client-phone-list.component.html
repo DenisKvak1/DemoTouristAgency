@@ -1,14 +1,19 @@
 <div>
   <div>
-    <div class="mt-2" *ngFor="let phone of phones;let i = index; trackBy: trackById"
+    <div class="mt-2" *ngFor="let phoneControl of phones.controls;let i = index; trackBy: trackById"
     >
       <app-client-phone-input
         class="mt-2"
+        [formControl]="phoneControl"
         [isDeletable]="phones.length !== 1"
-        [phone]="phone"
-        (delete)="onPhoneDelete(i)"
+        (delete)="deletePhone(i)"
       ></app-client-phone-input>
+      <div *ngIf="phoneControl.invalid && !phoneControl.untouched && phoneControl.errors as errors"
+           class="flex flex-column">
+        <div class="text-danger" *ngIf="errors['required']">Номер телефона обязателен</div>
+        <div class="text-danger" *ngIf="errors['validatePhoneNumber']">Неверный номер телефона</div>
+      </div>
     </div>
   </div>
-  <button type="button" class="btn btn-primary mt-2" (click)="this.addPhone.emit()">+</button>
+  <button type="button" class="btn btn-primary mt-2" (click)="this.addPhone()">+</button>
 </div>

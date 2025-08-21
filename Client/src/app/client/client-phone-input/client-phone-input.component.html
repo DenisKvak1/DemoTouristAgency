@@ -1,7 +1,8 @@
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
   <div>
     <ngx-intl-tel-input
-      [(ngModel)]="phone.number"
+      (input)="onPhoneInput()"
+      [formControl]="phoneNumberControl"
       [preferredCountries]="[CountryISO.Ukraine, CountryISO.Kazakhstan, CountryISO.Germany]"
       [enableAutoCountrySelect]="true"
       [enablePlaceholder]="true"
@@ -12,10 +13,10 @@
       [phoneValidation]="true"
     >
     </ngx-intl-tel-input>
-    <span class="text-danger"></span>
   </div>
-  <div *ngFor="let socialMedia of phone.socialMedias; trackBy: trackById">
-    <input class="form-check-input" [id]="socialMedia.id" [(ngModel)]="socialMedia.selected" type="checkbox">
+  <div *ngFor="let socialMedia of socialMedias; trackBy: trackById">
+    <input class="form-check-input" [id]="socialMedia.id" [(ngModel)]="socialMedia.selected"
+           (input)="onSocialMediaUpdate()" type="checkbox">
     <label class="form-check-label ms-2" [for]="socialMedia.id">{{ socialMedia.name }}</label>
   </div>
 

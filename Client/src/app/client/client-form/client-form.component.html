@@ -3,19 +3,23 @@
     <div class="col form-data">
       <div>
         <input class="form-control" placeholder="Фамилия" formControlName="firstName"/>
-        <span *ngIf="!this.form.untouched && this.form.get('firstName')?.errors?.['required']" class="text-danger">Имя обязательно</span>
+        <span *ngIf="!this.form.controls.firstName.untouched && this.form.controls.firstName?.errors?.['required']"
+              class="text-danger">Имя обязательно</span>
       </div>
       <div>
         <input class="form-control" placeholder="Имя" formControlName="lastName"/>
-        <span *ngIf="!this.form.untouched && this.form.get('lastName')?.errors?.['required']" class="text-danger">Фамилия обязательна</span>
+        <span *ngIf="!this.form.controls.lastName.untouched && this.form.controls.lastName.errors?.['required']"
+              class="text-danger">Фамилия обязательна</span>
       </div>
       <div>
         <input class="form-control" placeholder="Отчество" formControlName="middleName"/>
-        <span *ngIf="!this.form.untouched && this.form.get('middleName')?.errors?.['required']" class="text-danger">Отчество обязательно</span>
+        <span *ngIf="!this.form.controls.middleName.untouched && this.form.controls.middleName?.errors?.['required']"
+              class="text-danger">Отчество обязательно</span>
       </div>
       <div class="mb-1">
         <input class="form-control" placeholder="Email" formControlName="email"/>
-        <span *ngIf="!this.form.untouched && this.form.get('email')?.errors?.['required']" class="text-danger">Email обязателен</span>
+        <span *ngIf="!this.form.controls.email.untouched && this.form.get('email')?.errors?.['required']"
+              class="text-danger">Email обязателен</span>
       </div>
       <div>
         <input class="form-check-input" id="allowNewSletter" type="checkbox"/>
@@ -23,12 +27,12 @@
       </div>
 
     </div>
-    <app-client-tags-picker class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0" [formControl]="form.controls.tags"/>
+    <app-client-tags-picker class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0" [tags]="form.controls.tags"/>
   </div>
   <app-client-phone-list
     class="row mt-4"
     *ngIf="isSocialMediasLoad"
-    [formControl]="form.controls.phones"
+    [phones]="form.controls.phones"
     [socialMedias]="socialMedias"
   ></app-client-phone-list>
   <button type="submit" class="btn btn-primary mt-3">Подвтердить</button>

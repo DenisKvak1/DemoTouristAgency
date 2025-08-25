@@ -1,8 +1,7 @@
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between">
   <div>
     <ngx-intl-tel-input
-      (input)="onPhoneInput()"
-      [formControl]="phoneNumberControl"
+      [formControl]="phoneControl.controls.number"
       [preferredCountries]="[CountryISO.Ukraine, CountryISO.Kazakhstan, CountryISO.Germany]"
       [enableAutoCountrySelect]="true"
       [enablePlaceholder]="true"
@@ -14,12 +13,12 @@
     >
     </ngx-intl-tel-input>
   </div>
-  <div *ngFor="let socialMedia of socialMedias; trackBy: trackById">
-    <input class="form-check-input" [id]="socialMedia.id" [(ngModel)]="socialMedia.selected"
-           (input)="onSocialMediaUpdate()" type="checkbox">
-    <label class="form-check-label ms-2" [for]="socialMedia.id">{{ socialMedia.name }}</label>
+  <div *ngFor="let socialMedia of phoneControl.controls.socialMedias.controls; trackBy: trackById">
+    <input class="form-check-input" [id]="socialMedia.controls.id.value" [formControl]="socialMedia.controls.selected"
+           type="checkbox">
+    <label class="form-check-label ms-2"
+           [for]="socialMedia.controls.id.value">{{ socialMedia.controls.name.value }}</label>
   </div>
-
   <button
     type="button"
     class="btn btn-danger delete-phone-btn"
@@ -28,4 +27,10 @@
     [class.deletable]="!isDeletable"
   >-
   </button>
+</div>
+<div
+  *ngIf="phoneControl.controls.number.invalid && !phoneControl.controls.number.untouched && phoneControl.controls.number.errors as errors"
+  class="flex flex-column">
+  <div class="text-danger" *ngIf="errors['required']">Номер телефона обязателен</div>
+  <div class="text-danger" *ngIf="errors['validatePhoneNumber']">Неверный номер телефона</div>
 </div>

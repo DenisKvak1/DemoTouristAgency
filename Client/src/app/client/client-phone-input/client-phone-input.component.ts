@@ -4,7 +4,7 @@ import {
   EventEmitter,
   forwardRef,
   Injector,
-  Input,
+  Input, OnInit,
   Optional,
   Output,
   Self,
@@ -15,7 +15,7 @@ import {CountryISO, NgxIntlTelInputComponent, SearchCountryField} from 'ngx-intl
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
+  FormControl, FormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   NgControl, ValidationErrors, Validator,
@@ -39,98 +39,31 @@ export interface PhoneNumber {
   standalone: false,
   templateUrl: './client-phone-input.component.html',
   styleUrl: './client-phone-input.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ClientPhoneInputComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => ClientPhoneInputComponent),
-      multi: true
-    }
-  ]
 })
-export class ClientPhoneInputComponent implements ControlValueAccessor, Validator, AfterViewInit {
+export class ClientPhoneInputComponent implements AfterViewInit, OnInit {
   @ViewChild(NgxIntlTelInputComponent, {static: true}) phoneInput!: NgxIntlTelInputComponent;
 
   protected readonly CountryISO = CountryISO;
   protected readonly SearchCountryField = SearchCountryField;
-  public phoneNumberControl = new FormControl<PhoneNumber>({
-    number: '',
-    internationalNumber: '',
-    nationalNumber: '',
-    e164Number: '',
-    countryCode: '',
-    dialCode: ''
-  }, [Validators.required]);
-  public id: Guid = '00000000-0000-0000-0000-000000000000'
-  public socialMedias: SocialMediaForm[] = []
-
+  @Input() phoneControl!: FormGroup<ClientPhoneForm>
   @Input() isDeletable: boolean = true;
   @Output() delete = new EventEmitter();
 
-  private emitChange!: (phone: ClientPhoneForm) => void;
-  private emitTouched!: () => void;
-  private emitValidate!: () => void;
-
   constructor() {
+
   }
 
-  trackById(i: number, tag: SocialMediaForm) {
-    return tag.id;
-  }
-
-  public registerOnChange(fn: (phone: ClientPhoneForm) => void): void {
-    this.emitChange = fn;
-  }
-
-  public registerOnTouched(fn: () => void): void {
-    this.emitTouched = fn;
-  }
-
-  public writeValue(phone: ClientPhoneForm): void {
-    this.id = phone.id;
-    this.socialMedias = phone.socialMedias;
-    this.phoneNumberControl.patchValue({
-      number: phone.number,
-      internationalNumber: '',
-      nationalNumber: '',
-      e164Number: '',
-      countryCode: '',
-      dialCode: ''
-    });
-  }
-
-  public onPhoneInput() {
-    this.emitChange(this.form)
-  }
-
-  public onSocialMediaUpdate() {
-    this.emitChange(this.form)
+  trackById(i: number, tag: FormGroup<SocialMediaForm>) {
+    return tag.value.id;
   }
 
   ngAfterViewInit() {
     this.phoneInput.onTouched = () => {
-      this.emitTouched()
-      this.emitValidate()
+      this.phoneControl.markAsTouched()
     };
   }
 
-  public registerOnValidatorChange(fn: () => void): void {
-    this.emitValidate = fn;
-  }
-
-  get form() {
-    return new ClientPhoneForm(this.id, this.phoneNumberControl.value?.number as string, this.socialMedias);
-  }
-
-  public validate(control: AbstractControl): ValidationErrors | null {
-    if (this.phoneNumberControl.valid && Boolean(this.phoneNumberControl.value?.number)) return null
-    return {
-      ...this.phoneNumberControl.errors,
-      required: !Boolean(this.phoneNumberControl.value?.number)
-    };
+  public ngOnInit(): void {
+    this.phoneControl.controls.number.setValidators(Validators.required)
   }
 }

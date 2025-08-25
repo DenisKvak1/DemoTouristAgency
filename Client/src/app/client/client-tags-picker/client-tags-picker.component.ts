@@ -1,44 +1,20 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {Guid} from '../../../models/Guid';
-import {ClientTag} from '../../../models/ClientTag';
+import {Component, forwardRef, Input} from '@angular/core';
 import {ClientTagForm} from './ClientTagForm';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {ClientPhoneForm} from '../client-phone-input/ClientPhoneForm';
+import {FormArray, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-client-tags-picker',
   standalone: false,
   templateUrl: './client-tags-picker.component.html',
-  styleUrl: './client-tags-picker.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ClientTagsPickerComponent),
-      multi: true
-    },
-  ]
+  styleUrl: './client-tags-picker.component.css'
 })
-export class ClientTagsPickerComponent implements ControlValueAccessor {
-  tags!: ClientTagForm[];
+export class ClientTagsPickerComponent {
+  @Input() tags!: FormArray<FormGroup<ClientTagForm>>;
+  constructor() {
 
-  private onChange!: (phone: ClientTagForm[]) => void;
-
-  trackById(i: number, tag: ClientTagForm) {
-    return tag.id;
   }
 
-  public registerOnChange(fn: (value: ClientTagForm[]) => void): void {
-    this.onChange = fn;
-  }
-
-  public registerOnTouched(fn: () => void): void {
-  }
-
-  public writeValue(tags: ClientTagForm[]): void {
-    this.tags = tags;
-  }
-
-  public onCheck() {
-    this.onChange(this.tags)
+  trackById(i: number, tag: FormGroup<ClientTagForm>) {
+    return tag.value.id;
   }
 }

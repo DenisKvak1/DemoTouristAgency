@@ -8,12 +8,16 @@ public record CreateClientVM(
     string MiddleName,
     string Email,
     bool AllowNewSletter,
+    CreatePassportVM? Passport,
     List<CreateClientPhoneVM> Phones,
     List<Guid> Tags
 )
 {
     public Domain.Entities.Client ToClient()
     {
+        var allIdsSocialMedias = Phones.SelectMany(p => p.SocialMedias).Distinct().ToList();
+        var socialMediaMap = allIdsSocialMedias.ToDictionary(id => id, id => new SocialMedia { Id = id });
+
         return new Domain.Entities.Client
         {
             Id = Guid.NewGuid(),
@@ -22,16 +26,30 @@ public record CreateClientVM(
             LastName = this.LastName,
             MiddleName = this.MiddleName,
             AllowNewSletter = this.AllowNewSletter,
-            Phones = this.Phones.Select(phone => new ClientPhone
+            Passport = Passport != null
+                ? new ClientPassport
+                {
+                    Id = Guid.NewGuid(),
+                    SerialNumber = Passport.SerialNumber,
+                    FirstName = Passport.FirstName,
+                    LastName = Passport.LastName,
+                    Nationality = Passport.Nationality,
+                    BirthDate = Passport.BirthDate,
+                    Gender = Passport.Gender,
+                    PlaceOfBirth = Passport.PlaceOfBirth,
+                    DateOfIssue = Passport.DateOfIssue,
+                    DateOfExpiry = Passport.DateOfExpiry,
+                    Record = Passport.Record,
+                    Authority = Passport.Authority
+                }
+                : null,
+            Phones = Phones.Select(phone => new ClientPhone
             {
                 Id = Guid.NewGuid(),
                 Number = phone.Number,
-                SocialMedias = phone.SocialMedias.Select(id => new SocialMedia
-                {
-                    Id = id
-                }).ToList()
+                SocialMedias = phone.SocialMedias.Select(id => socialMediaMap[id]).ToList()
             }).ToList(),
-            Tags = this.Tags.Select(id => new ClientTag { Id = id }).ToList()
+            Tags = Tags.Select(id => new ClientTag { Id = id }).ToList()
         };
     }
 };

@@ -25,14 +25,6 @@ import {Guid} from '../../../models/Guid';
 import {distinctUntilChanged} from 'rxjs';
 import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 
-export interface PhoneNumber {
-  number: string;       // полный номер с кодом страны
-  internationalNumber: string;
-  nationalNumber: string;
-  e164Number: string;   // формат +380XXXXXXXXX
-  countryCode: string;  // 'UA', 'US' и т.д.
-  dialCode: string;     // '+380'
-}
 
 @Component({
   selector: 'app-client-phone-input',

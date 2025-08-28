@@ -1,18 +1,19 @@
 import {Guid} from '../../../models/Guid';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {PhoneNumber} from './PhoneNumber';
 
 export class ClientPhoneForm {
   public id: FormControl<Guid>;
-  public number: FormControl<string>;
+  public number: FormControl<PhoneNumber>;
   public socialMedias: FormArray<FormGroup<SocialMediaForm>>;
 
   constructor(
     id: Guid,
-    number: string,
+    number: PhoneNumber,
     socialMedias: SocialMediaForm[] = []
   ) {
     this.id = new FormControl<Guid>(id, {nonNullable: true});
-    this.number = new FormControl<string>(number, {nonNullable: true});
+    this.number = new FormControl<PhoneNumber>(number, {nonNullable: true});
 
     this.socialMedias = new FormArray(
       socialMedias.map(sm => new FormGroup<SocialMediaForm>({

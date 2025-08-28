@@ -37,7 +37,7 @@ export class ClientPhoneListComponent implements OnInit {
   private getEmptyPhone() {
     return new ClientPhoneForm(
       '00000000-0000-0000-0000-000000000000',
-      "",
+      {number: ""},
       this.socialMedias?.map((x) => new SocialMediaForm(x.id, x.name))
     )
   }

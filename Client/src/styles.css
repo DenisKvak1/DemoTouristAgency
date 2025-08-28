@@ -1,1 +1,8 @@
 @import "../node_modules/intl-tel-input/build/css/intlTelInput.css";
+
+.form-data > *:not(:last-child) {
+  margin-bottom: 0.7rem;
+}
+.form-label {
+  margin-bottom: .3rem;
+}

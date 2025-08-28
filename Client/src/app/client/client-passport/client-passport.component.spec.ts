@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientPasportComponent } from './client-pasport.component';
+import { ClientPassportComponent } from './client-passport.component';
 
-describe('ClientPasportComponent', () => {
-  let component: ClientPasportComponent;
-  let fixture: ComponentFixture<ClientPasportComponent>;
+describe('ClientPassportComponent', () => {
+  let component: ClientPassportComponent;
+  let fixture: ComponentFixture<ClientPassportComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ClientPasportComponent]
+      declarations: [ClientPassportComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClientPasportComponent);
+    fixture = TestBed.createComponent(ClientPassportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

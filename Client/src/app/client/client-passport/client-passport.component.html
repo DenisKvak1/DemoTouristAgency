@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col form-data">
+    <div>
+      <label for="passportNationalityInput" class="form-label">Имя</label>
+      <input class="form-control" placeholder="Иван" id="passportFirstNameInput"
+             [formControl]="passport.controls.firstName"/>
+      <span
+        *ngIf="!passport.controls.firstName.untouched && passport.controls.firstName?.errors?.['required']"
+        class="text-danger"
+      >Имя обязательно</span>
+    </div>
+    <div>
+      <label for="passportLastNameInput" class="form-label">Фамилия</label>
+      <input class="form-control" placeholder="Столяров" id="passportLastNameInput"
+             [formControl]="passport.controls.lastName"/>
+      <span
+        *ngIf="!passport.controls.lastName.untouched && passport.controls.lastName?.errors?.['required']"
+        class="text-danger"
+      >Фамилия обязательна</span>
+    </div>
+    <div>
+      <label for="passportSerialInput" class="form-label">Серия паспорта</label>
+      <input class="form-control" placeholder="AB1234567" id="passportSerialInput"
+             [formControl]="passport.controls.serialNumber"/>
+      <span
+        *ngIf="!passport.controls.serialNumber.untouched && passport.controls.serialNumber?.errors?.['required']"
+        class="text-danger"
+      >Серейний номер обезателен</span>
+    </div>
+    <div>
+      <label for="passportNationalityInput" class="form-label">Национальность</label>
+      <input class="form-control" placeholder="UA" id="passportNationalityInput"
+             [formControl]="passport.controls.nationality"/>
+      <span
+        *ngIf="!passport.controls.nationality.untouched && passport.controls.nationality?.errors?.['required']"
+        class="text-danger"
+      >Национальность обязательна</span>
+    </div>
+    <div>
+      <label for="passportBirthdayInput" class="form-label">Дата рождение</label>
+      <input class="form-control" type="date" id="passportBirthdayInput" [formControl]="passport.controls.birthDate"/>
+      <span
+        *ngIf="!passport.controls.birthDate.untouched && passport.controls.birthDate?.errors?.['required']"
+        class="text-danger"
+      >Дата рождение обязательна</span>
+    </div>
+    <div>
+      <label for="passportGenderInput" class="form-label">Пол (гендер)</label>
+      <select class="form-select" id="passportGenderInput"
+              [formControl]="passport.controls.gender">
+        <option [ngValue]="null">Выберите пол</option>
+        <option [ngValue]="Sex.MALE">Мужской</option>
+        <option [ngValue]="Sex.FEMALE">Женский</option>
+      </select>
+      <span
+        *ngIf="!passport.controls.gender.untouched && passport.controls.gender?.errors?.['required']"
+        class="text-danger"
+      >Необходимо выбрать пол</span>
+    </div>
+  </div>
+  <div class="col form-data">
+    <div>
+      <label for="placeOfBirthInput" class="form-label">Место рождения</label>
+      <input class="form-control" type="text" id="placeOfBirthInput" [formControl]="passport.controls.placeOfBirth"/>
+      <span
+        *ngIf="!passport.controls.placeOfBirth.untouched && passport.controls.placeOfBirth?.errors?.['required']"
+        class="text-danger"
+      >Место рождения обязательно</span>
+    </div>
+    <div>
+      <label for="dateOfIssueInput" class="form-label">Дата выдачи</label>
+      <input class="form-control" type="date" id="dateOfIssueInput" [formControl]="passport.controls.dateOfIssue"/>
+      <span
+        *ngIf="!passport.controls.dateOfIssue.untouched && passport.controls.dateOfIssue?.errors?.['required']"
+        class="text-danger"
+      >Дата выдачи обязательна</span>
+    </div>
+    <div>
+      <label for="dateOfExpiryInput" class="form-label">Дата истечение</label>
+      <input
+        class="form-control"
+        type="date"
+        id="dateOfExpiryInput"
+        [formControl]="passport.controls.dateOfExpiry"
+      />
+      <span
+        *ngIf="!passport.controls.dateOfExpiry.untouched && passport.controls.dateOfExpiry?.errors?.['required']"
+        class="text-danger"
+      >Дата истечение обезательна</span>
+    </div>
+    <div>
+      <label for="recordInput" class="form-label">Номер записи</label>
+      <input class="form-control" type="text" id="recordInput" [formControl]="passport.controls.record"/>
+      <span
+        *ngIf="!passport.controls.record.untouched && passport.controls.record?.errors?.['required']"
+        class="text-danger"
+      >Номер записи обязателен</span>
+    </div>
+    <div>
+      <label for="authorityInput" class="form-label">Орган выдачи (код)</label>
+      <input class="form-control" type="number" id="authorityInput" [formControl]="passport.controls.authority"/>
+      <span
+        *ngIf="!passport.controls.authority.untouched && passport.controls.authority?.errors?.['required']"
+        class="text-danger"
+      >Орган выдачи обязателен</span>
+    </div>
+  </div>
+</div>

@@ -34,8 +34,12 @@ public class ClientConfigure : IEntityTypeConfiguration<Client>
         builder.HasIndex(x => x.Email);
 
         builder
-            .HasMany(x=> x.Tags)
+            .HasMany(x => x.Tags)
             .WithMany(x => x.Clients);
 
+        builder
+            .HasOne(x => x.Passport)
+            .WithOne(x => x.Client)
+            .HasForeignKey<ClientPassport>(x => x.ClientId);
     }
 }

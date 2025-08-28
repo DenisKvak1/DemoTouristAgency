@@ -9,8 +9,9 @@ public class AppDbContext : DbContext
     public DbSet<Client> Clients { get; set; }
     public DbSet<ClientPhone> ClientPhones { get; set; }
     public DbSet<ClientTag> ClientTags { get; set; }
+    public DbSet<ClientPassport> ClientPassport { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
-    
+
     protected AppDbContext()
     {
     }
@@ -23,6 +24,7 @@ public class AppDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new ClientConfigure());
         modelBuilder.ApplyConfiguration(new ClientPhoneConfigure());
+        modelBuilder.ApplyConfiguration(new ClientPassportConfigure());
         modelBuilder.ApplyConfiguration(new ClientTagConfigure());
         modelBuilder.ApplyConfiguration(new SocialMediaConfigure());
         

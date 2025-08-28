@@ -2,6 +2,7 @@ import {ClientPhone} from '../../../models/ClientPhone';
 import {ClientTag} from '../../../models/ClientTag';
 import {Guid} from '../../../models/Guid';
 import {SocialMedia} from '../../../models/SocialMedia';
+import {ClientPassport} from '../../../models/ClientPassport';
 
 interface ClientPhoneForm {
   id: Guid,
@@ -16,6 +17,7 @@ export class ClientForm {
     public middleName: string,
     public email: string,
     public allowNewSletter: boolean,
+    public passport: ClientPassport | null,
     public phones: ClientPhoneForm[],
     public tags: Guid[]
   ) {

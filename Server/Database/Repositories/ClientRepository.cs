@@ -56,8 +56,12 @@ public class ClientRepository : DbRepository<Client>, IClientRepository
     public async new Task<bool> AddItemAsync(Client item)
     {
         item.Tags.ForEach(tag => { _context.Entry(tag).State = EntityState.Unchanged; });
-        foreach (SocialMedia socialMedia in item.Phones.SelectMany(x => x.SocialMedias).DistinctBy(x => x.Id))
+        
+        foreach (SocialMedia socialMedia in item.Phones
+                     .SelectMany(x => x.SocialMedias)
+                     .DistinctBy(x => x.Id))
         {
+            Console.WriteLine(socialMedia.Id);
             _context.Entry(socialMedia).State = EntityState.Unchanged;
         }
         return await base.AddItemAsync(item);

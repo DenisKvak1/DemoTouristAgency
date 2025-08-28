@@ -24,4 +24,7 @@ public class ClientPassport : DbEntity
     public DateOnly DateOfExpiry { get; set; }
     public string Record { get; set; }
     public int Authority { get; set; }
+    
+    public Client Client { get; set; }
+    public Guid ClientId { get; set; }
 }

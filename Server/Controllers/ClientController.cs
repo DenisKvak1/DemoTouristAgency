@@ -9,7 +9,7 @@ namespace ClientDemoAngular.Server.Controllers;
 [Route("api/[controller]")]
 public class ClientController(IClientRepository _repository) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost]  
     public async Task<IActionResult> Create([FromBody] CreateClientVM model)
     {
         await _repository.AddItemAsync(model.ToClient());

@@ -12,4 +12,5 @@ public class Client : DbEntity
 
     public List<ClientPhone> Phones { get; set; } = [];
     public List<ClientTag> Tags { get; set; } = [];
+    public ClientPassport? Passport { get; set; }
 }

@@ -3,7 +3,7 @@ using ClientDemoAngular.Server.Domain.Entities;
 
 namespace ClientDemoAngular.Server.ViewModels.Client;
 
-public record CreateClientPhoneVM(
-    [Required] Guid ClientId,
+public record ClientPhoneRequest(
+    Guid Id,
     [Required] string Number,
     List<Guid> SocialMedias);

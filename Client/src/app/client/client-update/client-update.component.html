@@ -1,0 +1,6 @@
+<div class="container-sm">
+  <h3 class="mb-0 mt-2">Обновить клиента</h3>
+  <app-client-form class="m-2" *ngIf="client" [initialValue]="client" (submitForm)="onSubmit($event)">
+    Обновить данные клиента
+  </app-client-form>
+</div>

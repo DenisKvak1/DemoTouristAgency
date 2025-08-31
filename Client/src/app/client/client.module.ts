@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ClientAddComponent} from './client-add/client-add.component';
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {ClientPassportComponent} from './client-passport/client-passport.component';
+import { ClientUpdateComponent } from './client-update/client-update.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {ClientPassportComponent} from './client-passport/client-passport.compone
     ClientPhoneInputComponent,
     ClientPhoneListComponent,
     ClientAddComponent,
-    ClientPassportComponent
+    ClientPassportComponent,
+    ClientUpdateComponent
   ],
   imports: [
     CommonModule,

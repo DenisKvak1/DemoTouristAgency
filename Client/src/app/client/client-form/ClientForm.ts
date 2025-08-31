@@ -12,6 +12,7 @@ interface ClientPhoneForm {
 
 export class ClientForm {
   constructor(
+    public id: Guid,
     public firstName: string,
     public lastName: string,
     public middleName: string,

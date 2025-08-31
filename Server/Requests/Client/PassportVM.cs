@@ -3,7 +3,8 @@ using ClientDemoAngular.Server.Domain.Entities;
 
 namespace ClientDemoAngular.Server.ViewModels.Client;
 
-public record CreatePassportVM(
+public record PassportRequest(
+    Guid Id,
     [Required] string SerialNumber,
     [Required] string FirstName,
     [Required] string LastName,
@@ -14,6 +15,5 @@ public record CreatePassportVM(
     [Required] DateOnly DateOfIssue,
     [Required] DateOnly DateOfExpiry,
     [Required] string Record,
-    [Required] int Authority,
-    Guid ClientId
+    [Required] int Authority
 );

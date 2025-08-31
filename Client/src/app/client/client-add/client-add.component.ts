@@ -1,6 +1,10 @@
 import {Component} from '@angular/core';
 import {ClientForm} from '../client-form/ClientForm';
 import {ClientService} from '../../../services/ClientService';
+import {SocialMediaService} from '../../../services/SocialMediaService]';
+import {ClientTagService} from '../../../services/ClientTagService';
+import {ClientTag} from '../../../models/ClientTag';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-client-add',
@@ -12,6 +16,7 @@ export class ClientAddComponent {
   constructor(
     private clientService: ClientService,
   ) {
+
   }
 
   onSubmit(form: ClientForm) {

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ClientDemoAngular.Server.DataBase.Context;
 using ClientDemoAngular.Server.DataBase.Repositories;
 using ClientDemoAngular.Server.Domain.Entities;
@@ -14,7 +15,6 @@ namespace ClientDemoAngular.Server
 
             // Add services to the container.
             var connectionString = builder.Configuration["ConnectionStrings:DefaultConnStr"];
-
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
             builder.Services.AddDbContext<DbContext, AppDbContext>();

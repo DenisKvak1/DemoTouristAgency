@@ -27,7 +27,11 @@
       </div>
 
     </div>
-    <app-client-tags-picker class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0" [tags]="form.controls.tags"/>
+    <app-client-tags-picker
+      *ngIf="this.isLoadTagAndSocialMedia"
+      class="col mt-3 mt-sm-0 ms-sm-1 ms-md-4 p-ms-0"
+      [tags]="form.controls.tags"
+    />
   </div>
   <div class="mt-3">
     <ng-template #passportModal let-modal>
@@ -59,8 +63,8 @@
     </button>
   </div>
   <app-client-phone-list
+    *ngIf="this.isLoadTagAndSocialMedia"
     class="row mt-4"
-    *ngIf="isSocialMediasLoad"
     [phones]="form.controls.phones"
     [socialMedias]="socialMedias"
   ></app-client-phone-list>

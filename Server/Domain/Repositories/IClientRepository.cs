@@ -7,5 +7,4 @@ namespace ClientDemoAngular.Server.Domain.Repositories;
 
 public interface IClientRepository : IDbRepository<Client>
 {
-    Task<bool> AddPhone(CreateClientPhoneVM model);
 }

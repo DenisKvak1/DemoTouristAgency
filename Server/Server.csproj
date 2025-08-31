@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\ClientTags\" />
+    <Folder Include="Requests\ClientTags\" />
   </ItemGroup>
 
 </Project>
